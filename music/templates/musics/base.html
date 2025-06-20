@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>VivaLaVida</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><i class="fa-solid fa-record-vinyl"></i> VivaLaVida</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor03">
+            <ul class="navbar-nav me-auto">
+                {% if user.is_authenticated %}
+                <!-- Music -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"><i class="fa-solid fa-music"></i> Music</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'index' %}"><i class="fa-solid fa-list fa-lg"></i> List Music</a>
+                        <a class="dropdown-item" href="{% url 'add' %}"><i class="fa-solid fa-plus fa-lg"></i> Add Music</a>
+                    </div>
+                </li>
+                <!-- Artist -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"><i class="fa-solid fa-palette"></i> Artist</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'artist_index' %}"><i class="fa-solid fa-list fa-lg"></i> List Artist</a>
+                        <a class="dropdown-item" href="{% url 'add_artist' %}"><i class="fa-solid fa-plus fa-lg"></i> Add Artist</a>
+                    </div>
+                </li>
+                <!-- Albums -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"><i class="fa-solid fa-record-vinyl"></i> Albums</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'album_index' %}"><i class="fa-solid fa-list fa-lg"></i> List Albums</a>
+                        <a class="dropdown-item" href="{% url 'add_album' %}"><i class="fa-solid fa-plus fa-lg"></i> Add Albums</a>
+                    </div>
+                </li>
+                <!-- Price -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"><i class="fa-solid fa-dollar-sign"></i> Price</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'price_index' %}"><i class="fa-solid fa-list fa-lg"></i> List Price</a>
+                        <a class="dropdown-item" href="{% url 'add_price' %}"><i class="fa-solid fa-plus fa-lg"></i> Add Price</a>
+                    </div>
+                </li>
+                <!-- Authority -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'authority' %}"><i class="fa-solid fa-wand-magic-sparkles"></i> Authority</a>
+                </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa-solid fa-user"></i> User: {{ user.username }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" href="{% url 'profile' %}">
+                            <i class="fa-solid fa-id-badge me-2"></i> Profile
+                        </a>
+                        <a class="dropdown-item disabled">
+                            <i class="fa-solid fa-user-tag me-2"></i> Role:
+                            {% if user.role %}
+                                <span class="badge bg-info text-dark">{{ user.role|title }}</span>
+                            {% else %}
+                                None
+                            {% endif %}
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <form class="px-4 py-3" action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger w-100">Logout</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    {% block body %}
+    {% endblock %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

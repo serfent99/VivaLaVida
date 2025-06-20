@@ -1,0 +1,26 @@
+{% extends "musics/base.html" %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4><i class="fa-solid fa-id-badge"></i> Profile Information</h4>
+            <div>
+                <a href="{% url 'edit_profile' %}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                <a href="{% url 'delete_account' %}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Role:</strong> 
+                {% if user.role %}
+                    <span class="badge bg-info text-dark">{{ user.role|title }}</span>
+                {% else %}
+                    <span class="text-muted">No Role Assigned</span>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
